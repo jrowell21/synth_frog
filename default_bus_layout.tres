@@ -1,0 +1,41 @@
+[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://cj0oat0wr4g2k"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_h7ldi"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectHardLimiter" id="AudioEffectHardLimiter_435wy"]
+resource_name = "HardLimiter"
+pre_gain_db = -6.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_a0g4d"]
+resource_name = "Reverb"
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_4dauv"]
+resource_name = "Delay"
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_kete0"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectHardLimiter" id="AudioEffectHardLimiter_n3fhy"]
+resource_name = "HardLimiter"
+pre_gain_db = -6.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_h7ldi")
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectHardLimiter_435wy")
+bus/0/effect/1/enabled = false
+bus/1/name = &"Effects"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_a0g4d")
+bus/1/effect/0/enabled = false
+bus/1/effect/1/effect = SubResource("AudioEffectDelay_4dauv")
+bus/1/effect/1/enabled = false
+bus/1/effect/2/effect = SubResource("AudioEffectCompressor_kete0")
+bus/1/effect/2/enabled = false
+bus/1/effect/3/effect = SubResource("AudioEffectHardLimiter_n3fhy")
+bus/1/effect/3/enabled = false

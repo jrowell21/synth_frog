@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InvItem" load_steps=3 format=3 uid="uid://b365can55hous"]
+
+[ext_resource type="Script" path="res://Inventory/inventory_item.gd" id="1_3l8km"]
+[ext_resource type="Texture2D" uid="uid://bpintlug43u32" path="res://Inventory/soundgun.png" id="2_4d6qb"]
+
+[resource]
+script = ExtResource("1_3l8km")
+name = "Synth Gun"
+texture = ExtResource("2_4d6qb")
+description = "Shoots sound or something"

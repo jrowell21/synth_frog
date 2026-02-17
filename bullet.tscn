@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkv518d3qykuf"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_rtx80"]
+[ext_resource type="Texture2D" uid="uid://br2hsypxd5hnv" path="res://sin_bullet.png" id="2_8px78"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y6232"]
+size = Vector2(30, 10)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_gsdap"]
+mix_rate = 22050.0
+buffer_length = 1.0
+
+[node name="bullet" type="Area2D"]
+disable_mode = 2
+collision_layer = 2
+script = ExtResource("1_rtx80")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y6232")
+debug_color = Color(1, 0, 0.0931407, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_8px78")
+
+[node name="DelayTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamGenerator_gsdap")
+bus = &"Effects"
+
+[connection signal="body_entered" from="." to="." method="_on_bullet_collision"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]

@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct8m0rvapha8m"]
+
+[ext_resource type="Script" path="res://Inventory/inv_ui.gd" id="1_74v1g"]
+[ext_resource type="PackedScene" uid="uid://db1elk11vi3ym" path="res://Inventory/inv_slot.tscn" id="2_ppxtm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3kna"]
+bg_color = Color(0.300424, 0.83767, 0.843377, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="InvUI" type="Control"]
+custom_minimum_size = Vector2(162, 65)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 162.0
+offset_bottom = 65.0
+script = ExtResource("1_74v1g")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 161.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x3kna")
+
+[node name="GridContainer" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.5
+offset_top = -19.0
+offset_right = 61.5
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 6
+
+[node name="inv_slot1" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot2" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot3" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot4" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot5" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot6" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot7" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot8" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot9" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot10" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot11" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
+
+[node name="inv_slot12" parent="Panel/GridContainer" instance=ExtResource("2_ppxtm")]
+layout_mode = 2
