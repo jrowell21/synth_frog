@@ -408,7 +408,8 @@ shape = SubResource("CapsuleShape2D_w4ofv")
 debug_color = Color(0.389004, 0.611376, 3.85046e-07, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="Frog"]
-zoom = Vector2(3, 3)
+offset = Vector2(0, -100)
+zoom = Vector2(2.5, 2.5)
 
 [node name="InventoryMenu" type="CanvasLayer" parent="Frog"]
 

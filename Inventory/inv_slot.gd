@@ -10,8 +10,7 @@ var SPEED = 5
 var has_item = false
 var state = false
 var has_mouse_ = false
-
-signal has_mouse(name, state)
+var selected = false
 
 func update(item: InvItem):
 	if !item:
@@ -25,12 +24,10 @@ func update(item: InvItem):
 		has_item = true
 
 func _on_mouse_entered() -> void:
-	has_mouse.emit(name, true)
 	self.scale = (Vector2(1.2,1.2))
 	has_mouse_ = true
 
 func _on_mouse_exited() -> void:
-	has_mouse.emit(name, false)
 	self.scale = (Vector2(1,1))
 	has_mouse_ = false
 	
@@ -45,6 +42,18 @@ func _process(delta):
 	if not moving_object:
 		item_visual.position = item_visual.position.lerp(Vector2(8,8), SPEED*delta)
 		
+func select():
+	if not selected:
+		selected = true
+		item_visual.scale *= 2
+		scale *= 2
+
+func unselect():
+	if selected:
+		selected = false
+		item_visual.scale *= .5
+		scale *= .5
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():

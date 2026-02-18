@@ -29,6 +29,8 @@ func scale_bullet_size():
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
+	direction = init_direction
+	print("SHOT FIRED")
 	SoundManager.play_sound("laser", position, reflections, 1+slider1)
 	if delay[0] >= 1:
 		delay_timer.start()
@@ -56,7 +58,8 @@ func _process(delta):
 		# Handle reflection or destruction
 		if reflections < reverb[0]:
 			if reverb[0] >= 0:
-				reflect_bullet(result)
+				pass
+				#reflect_bullet(result)
 		else:
 			print("bullet destroyed")
 			queue_free()

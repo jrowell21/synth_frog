@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv7t0h70iai3q"]
+[gd_scene load_steps=6 format=3 uid="uid://bv7t0h70iai3q"]
 
 [ext_resource type="Texture2D" uid="uid://32cgfipiah6c" path="res://croak.png" id="1_8ae2j"]
+[ext_resource type="Script" path="res://croak.gd" id="1_66b1n"]
+[ext_resource type="AudioStream" uid="uid://crxt2gp14wgn" path="res://croak.mp3" id="3_x15he"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_48mjd"]
 
@@ -10,14 +12,31 @@ _data = {
 }
 point_count = 3
 
-[node name="Area2D" type="Area2D"]
+[node name="croak" type="Area2D"]
+scale = Vector2(0.5, 0.5)
 collision_layer = 2
+script = ExtResource("1_66b1n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_48mjd")
 
+[node name="Path2D" type="Path2D" parent="."]
+visible = false
+curve = SubResource("Curve2D_dcltn")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+visible = false
+position = Vector2(1000, 0)
+rotation = 0.785398
+progress = 1467.97
+loop = false
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1000, 0)
+rotation = 1.5708
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_8ae2j")
 
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_dcltn")
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_x15he")

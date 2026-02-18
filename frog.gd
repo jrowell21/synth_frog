@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 @onready var _animated_sprite = $AnimatedSprite2D
-@onready var croak = $AudioStreamPlayer2D
+@onready var health_bar = $HUD/MainPanel/VBoxContainer/Health/ProgressBar
+@onready var hud = $HUD
 @export var inv: Inv
 
 # Movement variables
@@ -13,6 +14,8 @@ var dash_speed = 750  # Initial dash speed
 var dash_duration = .3  # Duration of the dash in seconds
 var dash_cooldown = 0.5  # Cooldown time between dashes
 var double_tap_time = 0.2  # Maximum time between taps to trigger a dash
+var right = false
+var left = false
 
 # Friction variables
 var ground_friction = 5000  # Strong friction to stop quickly on the ground
@@ -48,15 +51,17 @@ var ammo_recharge_timer = 0.0  # Timer for recharging ammo
 
 # Gun variables
 var bullet_scene = preload("res://bullet.tscn")  # Path to the bullet scene
+var croak_scene = preload("res://croak.tscn")  # Path to the bullet scene
+
 var shoot_cooldown = 0.5  # Time between shots
 var shoot_timer = 0.2  # Cooldown timer
 var current_waveform = "sine"  # Default waveform
 var bullet_speed = 500
 var bullet_damage = 20
-var reverb = [10,1] #number of reflections, #damage decay
-var delay = [3,1]
-var slider1 = 0.0
-var pitch = 0.0
+var reverb = [1,1] #number of reflections, #damage decay
+var delay = [0,1]
+var slider1 = 1
+var pitch = 1
 
 # Player variables
 var can_shoot = true  # Initially false until the gun is picked up
@@ -64,8 +69,6 @@ var max_health = 1000
 var current_health = 1000
 var knockback_velocity := Vector2.ZERO
 var knockback_decay := 0.9
-
-@onready var health_bar = $HUD/MainPanel/VBoxContainer/Health/ProgressBar
 
 func _ready():
 	health_bar.max_value = max_health
@@ -88,13 +91,19 @@ func _physics_process(delta):
 			_animated_sprite.play("run_right")
 		else:
 			_animated_sprite.play("jump_right")
+		right = true
+		left = false
 	elif velocity.x < -0.1:
 		if is_on_floor():
 			_animated_sprite.play("run_left")
 		else:
 			_animated_sprite.play("jump_left")
+		right = false
+		left = true
 	else:
 		_animated_sprite.play("idle")
+		right = false
+		left = false
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -141,9 +150,18 @@ func _physics_process(delta):
 	# Handle shooting
 	if Input.is_action_just_pressed("ui_shoot") and shoot_timer <= 0 and current_ammo > 0 and can_shoot:
 		#shoot_bullet()
-		croak.pitch_scale = randf_range(0.3, 1.2)  # slight variation
-		croak.play()
-		shoot_timer = shoot_cooldown
+		shoot_timer = shoot_cooldown		
+		if hud.use_item() == "shoot":
+			shoot_bullet()
+		else:
+			var croak = croak_scene.instantiate()
+			croak.position = global_position
+			var mouse_position = get_global_mouse_position()
+			if (mouse_position - global_position).x > 0:
+				croak.scale = Vector2(.5,.5)
+			else:
+				croak.scale = Vector2(-.5,.5)
+			get_parent().add_child(croak)
 		#current_ammo -= 1
 
 	# Decrease shoot cooldown
@@ -263,16 +281,16 @@ func reset_dashes():
 
 func shoot_bullet():
 	# Spawn and configure the bullet
+	print("SHOT FIRED")
 	var bullet = bullet_scene.instantiate()
-	bullet.global_position = global_position
-	var stick_direction := Vector2(
+	var stick_direction = Vector2(
 		Input.get_action_strength("ui_right_stick_right") - Input.get_action_strength("ui_right_stick_left"),
 		Input.get_action_strength("ui_right_stick_down") - Input.get_action_strength("ui_right_stick_up")
 	)
-	print(stick_direction)
 	var mouse_position = get_global_mouse_position()
-	var direction = (stick_direction - global_position).normalized()
-	bullet.set_direction(stick_direction)
+	var direction = (mouse_position-position).normalized()
+	bullet.global_position = global_position + 20*direction
+	bullet.set_direction(direction)
 
 	# Pass modular configuration to the bullet
 	#if reverb[0] > 0 and delay[0] > 0:

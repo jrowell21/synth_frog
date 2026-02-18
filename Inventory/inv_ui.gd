@@ -2,6 +2,7 @@ extends Control
 
 @onready var inv: Inv = preload("res://Inventory/playersinv.tres")
 @onready var slots: Array = $Panel/GridContainer.get_children()
+
 var is_open = false
 var temp_slot 
 var item_name
@@ -11,7 +12,6 @@ func _ready():
 	close()
 
 func _process(delta):
-	pass
 	if is_open:
 		for i in range(slots.size()):
 			if slots[i].moving_object and inv.items[i]:
@@ -29,6 +29,7 @@ func _process(delta):
 		if is_open:
 			close()
 		else:
+			update_slots()
 			open()
 	
 func update_slots():

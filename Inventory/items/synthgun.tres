@@ -8,3 +8,5 @@ script = ExtResource("1_3l8km")
 name = "Synth Gun"
 texture = ExtResource("2_4d6qb")
 description = "Shoots sound or something"
+attack = true
+style = "shoot"
